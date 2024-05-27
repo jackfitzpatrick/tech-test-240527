@@ -9,4 +9,13 @@ public class CheckoutTests
     Assert.NotNull(actual);
   }
 
+  [Test]
+  public void CanScanItem()
+  {
+    var checkout = new Checkout();
+    checkout.Scan("A");
+    var actual = checkout.GetTotalPrice();
+    Assert.AreEqual(50, actual);
+  }
+
 }
