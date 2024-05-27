@@ -7,6 +7,7 @@ public class Checkout : ICheckout
     var numberOfSpecialPrices = (int)((double)itemAs.Count / 3);
     var specialPriceTotal = 130 * numberOfSpecialPrices;
     TotalPrice = TotalPrice += specialPriceTotal;
+    itemAs.RemoveRange(0, numberOfSpecialPrices * 3);
     TotalPrice = TotalPrice += itemAs.Count * 50;
 
     foreach (var item in Items)

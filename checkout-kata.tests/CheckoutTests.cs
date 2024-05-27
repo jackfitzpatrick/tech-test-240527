@@ -76,4 +76,18 @@ public class CheckoutTests
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(130, actual);
   }
+
+  [Test]
+  public void HandlesItemARemainder()
+  {
+    var checkout = new Checkout();
+
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+
+    var actual = checkout.GetTotalPrice();
+    Assert.AreEqual(180, actual);
+  }
 }
