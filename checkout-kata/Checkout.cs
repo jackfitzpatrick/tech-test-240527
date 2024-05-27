@@ -4,11 +4,19 @@ public class Checkout : ICheckout
   {
     var itemAs = Items.FindAll(x => x.StockKeepingUnit == "A");
     Items.RemoveAll(x => x.StockKeepingUnit == "A");
-    var numberOfSpecialPrices = (int)((double)itemAs.Count / 3);
-    var specialPriceTotal = 130 * numberOfSpecialPrices;
-    TotalPrice = TotalPrice += specialPriceTotal;
-    itemAs.RemoveRange(0, numberOfSpecialPrices * 3);
+    var numberOfItemASpecialPrices = (int)((double)itemAs.Count / 3);
+    var itemASpecialPriceTotal = 130 * numberOfItemASpecialPrices;
+    TotalPrice = TotalPrice += itemASpecialPriceTotal;
+    itemAs.RemoveRange(0, numberOfItemASpecialPrices * 3);
     TotalPrice = TotalPrice += itemAs.Count * 50;
+
+    var itemBs = Items.FindAll(x => x.StockKeepingUnit == "B");
+    Items.RemoveAll(x => x.StockKeepingUnit == "B");
+    var numberOfItemBSpecialPrices = (int)((double)itemBs.Count / 2);
+    var itemBSpecialPriceTotal = 45 * numberOfItemBSpecialPrices;
+    TotalPrice = TotalPrice += itemBSpecialPriceTotal;
+    itemBs.RemoveRange(0, numberOfItemBSpecialPrices * 2);
+    TotalPrice = TotalPrice += itemBs.Count * 30;
 
     foreach (var item in Items)
     {
