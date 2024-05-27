@@ -34,10 +34,10 @@ public class Checkout : ICheckout
 
     if (specialOffer != null)
     {
-      var numberOfItemASpecialPrices = (int)((double)itemsToBeProcessed.Count / specialOffer.NumberOfUnits);
-      var itemASpecialPriceTotal = specialOffer.SpecialPrice * numberOfItemASpecialPrices;
-      price = price += itemASpecialPriceTotal;
-      itemsToBeProcessed.RemoveRange(0, numberOfItemASpecialPrices * specialOffer.NumberOfUnits);
+      var numberOfItemSpecialPrices = (int)((double)itemsToBeProcessed.Count / specialOffer.NumberOfUnits);
+      var itemSpecialPriceTotal = specialOffer.SpecialPrice * numberOfItemSpecialPrices;
+      price = price += itemSpecialPriceTotal;
+      itemsToBeProcessed.RemoveRange(0, numberOfItemSpecialPrices * specialOffer.NumberOfUnits);
     }
 
     price = price += itemsToBeProcessed.Count * item.UnitPrice;
