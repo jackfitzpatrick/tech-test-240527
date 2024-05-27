@@ -146,4 +146,24 @@ public class CheckoutTests
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(90, actual);
   }
+
+  [Test]
+  public void HandlesMultipleItemSpecialPricesAndOtherItems()
+  {
+    var checkout = new Checkout();
+
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.itemC);
+    checkout.Scan(SupermarketItems.itemD);
+
+
+    var actual = checkout.GetTotalPrice();
+    Assert.AreEqual(290, actual);
+  }
 }
