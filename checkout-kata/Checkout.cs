@@ -2,22 +2,14 @@ public class Checkout : ICheckout
 {
   public int GetTotalPrice()
   {
-    //todo: refactor to method to reduce repetitive code and hard coded values
-    var itemAs = Items.FindAll(x => x.StockKeepingUnit == "A");
-    Items.RemoveAll(x => x.StockKeepingUnit == "A");
-    var numberOfItemASpecialPrices = (int)((double)itemAs.Count / 3);
-    var itemASpecialPriceTotal = 130 * numberOfItemASpecialPrices;
-    TotalPrice = TotalPrice += itemASpecialPriceTotal;
-    itemAs.RemoveRange(0, numberOfItemASpecialPrices * 3);
-    TotalPrice = TotalPrice += itemAs.Count * 50;
+    //todo: refactor to remove hard coded special pricing rules and filters
+    var itemAs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
+    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
+    TotalPrice += ProcessItems(itemAs, 3, 130, 50);
 
-    var itemBs = Items.FindAll(x => x.StockKeepingUnit == "B");
-    Items.RemoveAll(x => x.StockKeepingUnit == "B");
-    var numberOfItemBSpecialPrices = (int)((double)itemBs.Count / 2);
-    var itemBSpecialPriceTotal = 45 * numberOfItemBSpecialPrices;
-    TotalPrice = TotalPrice += itemBSpecialPriceTotal;
-    itemBs.RemoveRange(0, numberOfItemBSpecialPrices * 2);
-    TotalPrice = TotalPrice += itemBs.Count * 30;
+    var itemBs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
+    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
+    TotalPrice += ProcessItems(itemBs, 2, 45, 30);
 
     // todo: potentially inefficient if many items
     foreach (var item in Items)
@@ -31,6 +23,18 @@ public class Checkout : ICheckout
   public void Scan(Item item)
   {
     Items.Add(item);
+  }
+
+  private int ProcessItems(List<Item> items, int numberOfItems, int specialPrice, int basePrice)
+  {
+    int price = 0;
+    var numberOfItemASpecialPrices = (int)((double)items.Count / numberOfItems);
+    var itemASpecialPriceTotal = specialPrice * numberOfItemASpecialPrices;
+    price = price += itemASpecialPriceTotal;
+    items.RemoveRange(0, numberOfItemASpecialPrices * numberOfItems);
+    price = price += items.Count * basePrice;
+
+    return price;
   }
 
   private List<Item> Items;
