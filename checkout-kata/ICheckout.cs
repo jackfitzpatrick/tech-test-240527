@@ -1,5 +1,5 @@
 interface ICheckout
 {
-  void Scan(string item);
+  void Scan(Item item);
   int GetTotalPrice();
 }

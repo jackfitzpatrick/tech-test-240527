@@ -5,9 +5,9 @@ public class Checkout : ICheckout
     return TotalPrice;
   }
 
-  public void Scan(string item)
+  public void Scan(Item item)
   {
-    TotalPrice = 50;
+    TotalPrice += item.UnitPrice;
   }
 
   private int TotalPrice;

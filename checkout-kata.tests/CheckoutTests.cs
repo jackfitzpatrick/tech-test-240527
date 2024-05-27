@@ -13,9 +13,14 @@ public class CheckoutTests
   public void CanScanItem()
   {
     var checkout = new Checkout();
-    checkout.Scan("A");
+    var item = new Item
+    {
+      StockKeepingUnit = "A",
+      UnitPrice = 50,
+    };
+
+    checkout.Scan(item);
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(50, actual);
   }
-
 }
