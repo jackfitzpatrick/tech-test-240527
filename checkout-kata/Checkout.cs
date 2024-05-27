@@ -2,6 +2,7 @@ public class Checkout : ICheckout
 {
   public int GetTotalPrice()
   {
+    //todo: refactor to method to reduce repetitive code and hard coded values
     var itemAs = Items.FindAll(x => x.StockKeepingUnit == "A");
     Items.RemoveAll(x => x.StockKeepingUnit == "A");
     var numberOfItemASpecialPrices = (int)((double)itemAs.Count / 3);
@@ -18,6 +19,7 @@ public class Checkout : ICheckout
     itemBs.RemoveRange(0, numberOfItemBSpecialPrices * 2);
     TotalPrice = TotalPrice += itemBs.Count * 30;
 
+    // todo: potentially inefficient if many items
     foreach (var item in Items)
     {
       TotalPrice += item.UnitPrice;
