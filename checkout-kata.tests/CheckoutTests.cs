@@ -166,4 +166,23 @@ public class CheckoutTests
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(290, actual);
   }
+
+  [Test]
+  public void HandlesItemsScannedInAnyOrder()
+  {
+    var checkout = new Checkout();
+
+    checkout.Scan(SupermarketItems.itemC);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemD);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.itemB);
+
+    var actual = checkout.GetTotalPrice();
+    Assert.AreEqual(290, actual);
+  }
 }
