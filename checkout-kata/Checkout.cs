@@ -2,14 +2,14 @@ public class Checkout : ICheckout
 {
   public int GetTotalPrice()
   {
-    //todo: refactor to remove hard coded special pricing rules and filters
+    //todo: make filtering easier?
     var itemAs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
     Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
-    TotalPrice += ProcessItems(itemAs, 3, 130, 50);
+    TotalPrice += ProcessItems(itemAs, SupermarketItems.itemA);
 
     var itemBs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
     Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
-    TotalPrice += ProcessItems(itemBs, 2, 45, 30);
+    TotalPrice += ProcessItems(itemBs, SupermarketItems.itemB);
 
     // todo: potentially inefficient if many items
     foreach (var item in Items)
@@ -25,14 +25,21 @@ public class Checkout : ICheckout
     Items.Add(item);
   }
 
-  private int ProcessItems(List<Item> items, int numberOfItems, int specialPrice, int basePrice)
+  private int ProcessItems(List<Item> items, Item item)
   {
     int price = 0;
-    var numberOfItemASpecialPrices = (int)((double)items.Count / numberOfItems);
-    var itemASpecialPriceTotal = specialPrice * numberOfItemASpecialPrices;
-    price = price += itemASpecialPriceTotal;
-    items.RemoveRange(0, numberOfItemASpecialPrices * numberOfItems);
-    price = price += items.Count * basePrice;
+    var itemsToBeProcessed = items;
+    var specialOffer = item.SpecialOffer;
+
+    if (specialOffer != null)
+    {
+      var numberOfItemASpecialPrices = (int)((double)itemsToBeProcessed.Count / specialOffer.NumberOfUnits);
+      var itemASpecialPriceTotal = specialOffer.SpecialPrice * numberOfItemASpecialPrices;
+      price = price += itemASpecialPriceTotal;
+      itemsToBeProcessed.RemoveRange(0, numberOfItemASpecialPrices * specialOffer.NumberOfUnits);
+    }
+
+    price = price += itemsToBeProcessed.Count * item.UnitPrice;
 
     return price;
   }
