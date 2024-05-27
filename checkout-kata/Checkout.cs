@@ -3,13 +3,13 @@ public class Checkout : ICheckout
   public int GetTotalPrice()
   {
     //todo: make filtering easier?
-    var itemAs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
-    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemA.StockKeepingUnit);
-    TotalPrice += ProcessItems(itemAs, SupermarketItems.itemA);
+    var itemAs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.Items["A"].StockKeepingUnit);
+    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.Items["A"].StockKeepingUnit);
+    TotalPrice += ProcessItems(itemAs, SupermarketItems.Items["A"]);
 
-    var itemBs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
-    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.itemB.StockKeepingUnit);
-    TotalPrice += ProcessItems(itemBs, SupermarketItems.itemB);
+    var itemBs = Items.FindAll(x => x.StockKeepingUnit == SupermarketItems.Items["B"].StockKeepingUnit);
+    Items.RemoveAll(x => x.StockKeepingUnit == SupermarketItems.Items["B"].StockKeepingUnit);
+    TotalPrice += ProcessItems(itemBs, SupermarketItems.Items["B"]);
 
     // todo: potentially inefficient if many items
     foreach (var item in Items)
@@ -25,6 +25,7 @@ public class Checkout : ICheckout
     Items.Add(item);
   }
 
+  // todo: second param name could be better
   private int ProcessItems(List<Item> items, Item item)
   {
     int price = 0;

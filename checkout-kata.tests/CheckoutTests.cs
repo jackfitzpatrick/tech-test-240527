@@ -15,17 +15,17 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.Items["A"]);
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(50, actual);
   }
 
   [Test]
-  public void CanScanItemB()
+  public void CanScanItemsB()
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.Items["B"]);
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(30, actual);
   }
@@ -35,7 +35,7 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemC);
+    checkout.Scan(SupermarketItems.Items["C"]);
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(20, actual);
   }
@@ -45,7 +45,7 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemD);
+    checkout.Scan(SupermarketItems.Items["D"]);
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(15, actual);
   }
@@ -55,10 +55,10 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemC);
-    checkout.Scan(SupermarketItems.itemD);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["C"]);
+    checkout.Scan(SupermarketItems.Items["D"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(115, actual);
@@ -69,9 +69,9 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(130, actual);
@@ -82,10 +82,10 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(180, actual);
@@ -96,12 +96,12 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(260, actual);
@@ -109,39 +109,39 @@ public class CheckoutTests
 
 
   [Test]
-  public void CorrectlyAppliesItemBSpecialPrice()
+  public void CorrectlyAppliesItemsBSpecialPrice()
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(45, actual);
   }
 
   [Test]
-  public void HandlesItemBRemainder()
+  public void HandlesItemsBRemainder()
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(75, actual);
   }
 
   [Test]
-  public void HandlesMultipleItemBSpecialPrices()
+  public void HandlesMultipleItemsBSpecialPrices()
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(90, actual);
@@ -152,15 +152,15 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemC);
-    checkout.Scan(SupermarketItems.itemD);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["C"]);
+    checkout.Scan(SupermarketItems.Items["D"]);
 
 
     var actual = checkout.GetTotalPrice();
@@ -172,15 +172,15 @@ public class CheckoutTests
   {
     var checkout = new Checkout();
 
-    checkout.Scan(SupermarketItems.itemC);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemD);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemB);
-    checkout.Scan(SupermarketItems.itemA);
-    checkout.Scan(SupermarketItems.itemB);
+    checkout.Scan(SupermarketItems.Items["C"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["D"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
+    checkout.Scan(SupermarketItems.Items["A"]);
+    checkout.Scan(SupermarketItems.Items["B"]);
 
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(290, actual);
