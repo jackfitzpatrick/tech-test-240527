@@ -5,11 +5,21 @@ public static class SupermarketItems
   {
     StockKeepingUnit = "A",
     UnitPrice = 50,
+    SpecialOffer = new SpecialOffer
+    {
+      NumberOfUnits = 3,
+      SpecialPrice = 130,
+    }
   };
   public static Item itemB = new Item
   {
     StockKeepingUnit = "B",
     UnitPrice = 30,
+    SpecialOffer = new SpecialOffer
+    {
+      NumberOfUnits = 2,
+      SpecialPrice = 45,
+    }
   };
   public static Item itemC = new Item
   {
