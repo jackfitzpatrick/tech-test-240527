@@ -185,4 +185,19 @@ public class CheckoutTests
     var actual = checkout.GetTotalPrice();
     Assert.AreEqual(290, actual);
   }
+
+  [Test]
+  public void ScanHandlesInvalidStockKeepingUnit()
+  {
+    var checkout = new Checkout();
+
+    checkout.Scan(new Item
+    {
+      StockKeepingUnit = "InvalidStockKeepingUnit",
+      UnitPrice = 1000000000
+    });
+
+    var actual = checkout.GetTotalPrice();
+    Assert.AreEqual(0, actual);
+  }
 }
