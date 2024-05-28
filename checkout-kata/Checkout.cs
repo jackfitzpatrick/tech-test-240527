@@ -14,6 +14,12 @@ public class Checkout : ICheckout
 
   public void Scan(Item item)
   {
+    bool hasMatchingSupermarketItem = SupermarketItems.Items.ContainsKey(item.StockKeepingUnit);
+    if (!hasMatchingSupermarketItem)
+    {
+      // could also throw exception here/log error
+      return;
+    }
     var newUniqueItems = UniqueItems.FindAll(x => x.StockKeepingUnit == item.StockKeepingUnit);
     if (newUniqueItems.Count == 0)
     {
