@@ -12,20 +12,24 @@ public class Checkout : ICheckout
     return TotalPrice;
   }
 
-  public void Scan(Item item)
+  public void Scan(string itemStockKeepingUnit)
   {
-    bool hasMatchingSupermarketItem = SupermarketItems.Items.ContainsKey(item.StockKeepingUnit);
-    if (!hasMatchingSupermarketItem)
+    if (SupermarketItems.Items.ContainsKey(itemStockKeepingUnit))
+    {
+      Item? matchingSupermarketItem = SupermarketItems.Items[itemStockKeepingUnit];
+
+      var newUniqueItems = UniqueItems.FindAll(x => x.StockKeepingUnit == itemStockKeepingUnit);
+      if (newUniqueItems.Count == 0)
+      {
+        UniqueItems.Add(matchingSupermarketItem);
+      }
+      Items.Add(matchingSupermarketItem);
+    }
+    else
     {
       // could also throw exception here/log error
       return;
     }
-    var newUniqueItems = UniqueItems.FindAll(x => x.StockKeepingUnit == item.StockKeepingUnit);
-    if (newUniqueItems.Count == 0)
-    {
-      UniqueItems.Add(item);
-    }
-    Items.Add(item);
   }
 
   private int ProcessItems(List<Item> items, int itemPrice, SpecialOffer? specialOffer)
