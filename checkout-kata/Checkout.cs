@@ -49,7 +49,7 @@ public class Checkout : ICheckout
       // Calculate total special offer prices
       var itemSpecialPriceTotal = specialOffer.SpecialPrice * numberOfItemSpecialPrices;
       // Add them to the price
-      price = price += itemSpecialPriceTotal;
+      price += itemSpecialPriceTotal;
       // Remove these items from those to be processed
       itemsToBeProcessed.RemoveRange(0, numberOfItemSpecialPrices * specialOffer.NumberOfUnits);
     }
