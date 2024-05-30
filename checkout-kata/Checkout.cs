@@ -1,10 +1,10 @@
-public class Checkout : ICheckout
+public class Checkout(SupermarketItems supermarketItems) : ICheckout
 {
   public int GetTotalPrice()
   {
     foreach (var item in Items)
     {
-      Item matchingSupermarketItem = SupermarketItems.Items[item.Key];
+      Item matchingSupermarketItem = supermarketItems.Items[item.Key];
       TotalPrice += ProcessItems(matchingSupermarketItem, item.Value);
     }
 
@@ -13,7 +13,7 @@ public class Checkout : ICheckout
 
   public void Scan(string itemStockKeepingUnit)
   {
-    if (SupermarketItems.Items.ContainsKey(itemStockKeepingUnit))
+    if (supermarketItems.Items.ContainsKey(itemStockKeepingUnit))
     {
       if (Items.ContainsKey(itemStockKeepingUnit))
       {
@@ -58,11 +58,7 @@ public class Checkout : ICheckout
     return price;
   }
 
-  private readonly Dictionary<string, int> Items;
+  private readonly Dictionary<string, int> Items = [];
   private int TotalPrice;
-
-  public Checkout()
-  {
-    Items = [];
-  }
+  private readonly SupermarketItems supermarketItems = supermarketItems;
 }

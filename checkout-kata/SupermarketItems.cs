@@ -1,7 +1,7 @@
 //Would most likely be in DB
-public static class SupermarketItems
+public class SupermarketItems
 {
-  public static Dictionary<string, Item> Items = new Dictionary<string, Item>() {
+  public Dictionary<string, Item> Items = new Dictionary<string, Item>() {
     {"A", new Item
       {
         StockKeepingUnit = "A",
