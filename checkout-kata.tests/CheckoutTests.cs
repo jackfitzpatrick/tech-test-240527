@@ -3,10 +3,41 @@ namespace checkout_kata.tests;
 public class CheckoutTests
 {
 
-  private SupermarketItems supermarketItems;
+  private Dictionary<string, Item> supermarketItems;
   [SetUp]
   public void SetUp() {
-    supermarketItems = new SupermarketItems();
+    supermarketItems = new Dictionary<string, Item>() {
+    {"A", new Item
+      {
+        StockKeepingUnit = "A",
+        UnitPrice = 50,
+        SpecialOffer = new SpecialOffer
+        {
+          NumberOfUnits = 3,
+          SpecialPrice = 130,
+        }
+      }},
+    {"B", new Item
+      {
+          StockKeepingUnit = "B",
+          UnitPrice = 30,
+          SpecialOffer = new SpecialOffer
+          {
+            NumberOfUnits = 2,
+            SpecialPrice = 45,
+          }
+        }},
+    {"C", new Item
+      {
+          StockKeepingUnit = "C",
+          UnitPrice = 20,
+        }},
+    {"D", new Item
+      {
+          StockKeepingUnit = "D",
+          UnitPrice = 15,
+        }},
+  };;
   }
 
   [Test]
@@ -17,43 +48,14 @@ public class CheckoutTests
   }
 
   [Test]
-  public void CanScanItemA()
+  public void CanScanItem()
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(50, actual);
-  }
-
-  [Test]
-  public void CanScanItemsB()
-  {
-    var checkout = new Checkout(supermarketItems);
-
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(30, actual);
-  }
-
-  [Test]
-  public void CanScanItemC()
-  {
-    var checkout = new Checkout(supermarketItems);
-
-    checkout.Scan(supermarketItems.Items["C"].StockKeepingUnit);
-    var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(20, actual);
-  }
-
-  [Test]
-  public void CanScanItemD()
-  {
-    var checkout = new Checkout(supermarketItems);
-
-    checkout.Scan(supermarketItems.Items["D"].StockKeepingUnit);
-    var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(15, actual);
+    var totalPrice = supermarketItems["A"].UnitPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -61,13 +63,14 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["C"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["D"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["C"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["D"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(115, actual);
+    int totalPrice = supermarketItems["A"].UnitPrice + supermarketItems["B"].UnitPrice + supermarketItems["C"].UnitPrice + supermarketItems["D"].UnitPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -75,12 +78,13 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(130, actual);
+    var totalPrice = supermarketItems["A"].SpecialOffer?.SpecialPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -88,13 +92,14 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(180, actual);
+    var totalPrice = supermarketItems["A"].SpecialOffer?.SpecialPrice + supermarketItems["A"].UnitPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -102,15 +107,16 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(260, actual);
+    var totalPrice = supermarketItems["A"].SpecialOffer?.SpecialPrice * 2;
+    Assert.AreEqual(totalPrice, actual);
   }
 
 
@@ -119,11 +125,12 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(45, actual);
+    var totalPrice = supermarketItems["B"].SpecialOffer?.SpecialPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -131,12 +138,13 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(75, actual);
+    var totalPrice = supermarketItems["B"].SpecialOffer?.SpecialPrice + supermarketItems["B"].UnitPrice;
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -144,13 +152,15 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(90, actual);
+    var totalPrice = supermarketItems["B"].SpecialOffer?.SpecialPrice * 2;
+
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -158,19 +168,26 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["C"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["D"].StockKeepingUnit);
-
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["C"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["D"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(290, actual);
+    var totalPrice = 
+      supermarketItems["A"].SpecialOffer?.SpecialPrice +
+      supermarketItems["A"].UnitPrice +
+      supermarketItems["B"].SpecialOffer?.SpecialPrice +
+      supermarketItems["B"].UnitPrice +
+      supermarketItems["C"].UnitPrice +
+      supermarketItems["D"].UnitPrice;
+
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
@@ -178,18 +195,26 @@ public class CheckoutTests
   {
     var checkout = new Checkout(supermarketItems);
 
-    checkout.Scan(supermarketItems.Items["C"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["D"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["A"].StockKeepingUnit);
-    checkout.Scan(supermarketItems.Items["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["C"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["D"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["A"].StockKeepingUnit);
+    checkout.Scan(supermarketItems["B"].StockKeepingUnit);
 
     var actual = checkout.GetTotalPrice();
-    Assert.AreEqual(290, actual);
+    var totalPrice = 
+      supermarketItems["A"].SpecialOffer?.SpecialPrice +
+      supermarketItems["A"].UnitPrice +
+      supermarketItems["B"].SpecialOffer?.SpecialPrice +
+      supermarketItems["B"].UnitPrice +
+      supermarketItems["C"].UnitPrice +
+      supermarketItems["D"].UnitPrice;
+
+    Assert.AreEqual(totalPrice, actual);
   }
 
   [Test]
