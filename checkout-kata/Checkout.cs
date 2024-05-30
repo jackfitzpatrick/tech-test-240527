@@ -2,11 +2,10 @@ public class Checkout : ICheckout
 {
   public int GetTotalPrice()
   {
-    foreach (var uniqueItem in UniqueItems)
+    foreach (var item in Items)
     {
-      var allMatchingItems = Items.FindAll(x => x.StockKeepingUnit == uniqueItem.StockKeepingUnit);
-      Items.RemoveAll(x => x.StockKeepingUnit == uniqueItem.StockKeepingUnit);
-      TotalPrice += ProcessItems(allMatchingItems, uniqueItem.UnitPrice, uniqueItem.SpecialOffer);
+      Item matchingSupermarketItem = SupermarketItems.Items[item.Key];
+      TotalPrice += ProcessItems(matchingSupermarketItem, item.Value);
     }
 
     return TotalPrice;
@@ -16,14 +15,14 @@ public class Checkout : ICheckout
   {
     if (SupermarketItems.Items.ContainsKey(itemStockKeepingUnit))
     {
-      Item? matchingSupermarketItem = SupermarketItems.Items[itemStockKeepingUnit];
-
-      var isUnique = UniqueItems.Find(x => x.StockKeepingUnit == itemStockKeepingUnit) == null;
-      if (isUnique)
+      if (Items.ContainsKey(itemStockKeepingUnit))
       {
-        UniqueItems.Add(matchingSupermarketItem);
+        Items[itemStockKeepingUnit]++;
       }
-      Items.Add(matchingSupermarketItem);
+      else
+      {
+        Items[itemStockKeepingUnit] = 1;
+      }
     }
     else
     {
@@ -32,42 +31,38 @@ public class Checkout : ICheckout
     }
   }
 
-  private int ProcessItems(List<Item> items, int itemPrice, SpecialOffer? specialOffer)
+  private int ProcessItems(Item item, int numberOfItems)
   {
     int price = 0;
-    var itemsToBeProcessed = items;
 
     /*
       Special offer handling
       Note: currently this will only handle special offers that follow the buy x, pay y for those items type of offer.
       If another type of offer such as, buy x of y and get 50% off entire price, this would not work
     */
-    if (specialOffer != null)
+    if (item.SpecialOffer != null)
     {
       // Determine number of special offer pricing to be applied
-      var numberOfItemSpecialPrices = (int)((double)itemsToBeProcessed.Count / specialOffer.NumberOfUnits);
+      var numberOfItemSpecialPrices = (int)((double)numberOfItems / item.SpecialOffer.NumberOfUnits);
       // Calculate total special offer prices
-      var itemSpecialPriceTotal = specialOffer.SpecialPrice * numberOfItemSpecialPrices;
+      var itemSpecialPriceTotal = item.SpecialOffer.SpecialPrice * numberOfItemSpecialPrices;
       // Add them to the price
       price += itemSpecialPriceTotal;
       // Remove these items from those to be processed
-      itemsToBeProcessed.RemoveRange(0, numberOfItemSpecialPrices * specialOffer.NumberOfUnits);
+      numberOfItems -= numberOfItemSpecialPrices * item.SpecialOffer.NumberOfUnits;
     }
 
     // Add the cost of any non special offer items to the price
-    price = price += itemsToBeProcessed.Count * itemPrice;
+    price = price += numberOfItems * item.UnitPrice;
 
     return price;
   }
 
-  private readonly List<Item> Items;
-  private readonly List<Item> UniqueItems;
-
+  private readonly Dictionary<string, int> Items;
   private int TotalPrice;
 
   public Checkout()
   {
     Items = [];
-    UniqueItems = [];
   }
 }
