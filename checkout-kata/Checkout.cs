@@ -18,8 +18,8 @@ public class Checkout : ICheckout
     {
       Item? matchingSupermarketItem = SupermarketItems.Items[itemStockKeepingUnit];
 
-      var newUniqueItems = UniqueItems.FindAll(x => x.StockKeepingUnit == itemStockKeepingUnit);
-      if (newUniqueItems.Count == 0)
+      var isUnique = UniqueItems.Find(x => x.StockKeepingUnit == itemStockKeepingUnit) == null;
+      if (isUnique)
       {
         UniqueItems.Add(matchingSupermarketItem);
       }
